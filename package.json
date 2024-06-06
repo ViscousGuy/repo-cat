@@ -13,6 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "commander": "^12.1.0",
-    "minimatch": "^9.0.4"
+    "minimatch": "^9.0.4",
+    "sharp": "^0.33.4",
+    "svgson": "^5.3.1"
   }
 }
