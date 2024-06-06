@@ -1,7 +1,5 @@
 # repo-cat
 
-repo-cat is a command-line tool that generates a file containing the contents of a repository, excluding specified files, folders, and file extensions. It can be useful for creating a backup or snapshot of your project's source code.
-
 ## Description
 
 repo-cat recursively traverses the current working directory and copies the contents of all files (except for specified exclusions) into a single output file. It supports ignoring files, folders, and file extensions based on command-line options and the project's `.gitignore` file. Additionally, it provides metadata for image and SVG files, including dimensions and file size.
