@@ -8,11 +8,15 @@ repo-cat recursively traverses the current working directory and copies the cont
 
 1. Clone the repository
 2. Navigate to the project directory
-3. Install dependencies
+3. Install the package globally
+
+```
+npm install -g .
+```
 
 ## Usage
 
-npm run repo-cat [options]
+repo-cat [options]
 
 ### Options
 
@@ -26,7 +30,7 @@ npm run repo-cat [options]
 To create a file named `project-snapshot.txt` containing the contents of the current repository, excluding the `node_modules` folder, `.env` files, and `.png` and `.jpg` image files, run:
 
 ```
-npm run repo-cat --ignore-folders node_modules --ignore-files .env --ignore-exts png,jpg -o project-snapshot.txt
+repo-cat --ignore-folders node_modules --ignore-files .env --ignore-exts png,jpg -o project-snapshot.txt
 ```
 
 ## Default Ignored Patterns
