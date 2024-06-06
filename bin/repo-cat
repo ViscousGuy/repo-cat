@@ -1,0 +1,71 @@
+#!/usr/bin/env node
+const { program } = require("commander");
+const fs = require("fs");
+const path = require("path");
+const { readGitignore, traverseAndCopy } = require("../index");
+
+program
+  .option("--file <files...>", "Files to ignore (comma-separated)")
+  .option("--folder <folders...>", "Folders to ignore (comma-separated)")
+  .option("-o, --output <file>", "Output file name")
+  .parse(process.argv);
+
+const options = program.opts();
+const ignoreFiles = options.file || [];
+const ignoreFolders = options.folder || [];
+const outputFile = options.output || "repo-contents.txt";
+
+// Check and delete existing output file
+if (fs.existsSync(outputFile)) {
+  try {
+    fs.unlinkSync(outputFile);
+    console.log(`Existing ${outputFile} deleted.`);
+  } catch (err) {
+    console.error(`Error deleting ${outputFile}:`, err);
+    process.exit(1);
+  }
+}
+
+// Default ignore patterns
+const defaultIgnorePatterns = [
+  ".git/**",
+  "**/.*", // Hidden files
+  "**/*.mp4",
+  "**/*.mkv",
+  "**/*.avi",
+  "**/*.mov",
+  "**/*.wmv",
+  "**/*.zip",
+  "**/*.rar",
+  "**/*.tgz",
+];
+
+// Get ignore patterns from .gitignore and combine with command-line options
+const gitignorePatterns = readGitignore();
+const ignorePatterns = [
+  ...defaultIgnorePatterns,
+  ...gitignorePatterns,
+  ...ignoreFiles,
+  ...ignoreFolders.map((folder) => `${folder}/**`),
+];
+
+// Normalize the patterns to ensure they work correctly
+const normalizedIgnorePatterns = ignorePatterns.map((pattern) => {
+  if (pattern.startsWith("/")) {
+    return pattern.substring(1);
+  }
+  return pattern;
+});
+
+// Create output file and copy contents
+const outputFileStream = fs.createWriteStream(outputFile);
+traverseAndCopy(
+  process.cwd(),
+  normalizedIgnorePatterns,
+  ignoreFiles,
+  ignoreFolders,
+  outputFileStream
+);
+outputFileStream.end();
+
+console.log(`Repository contents copied to ${outputFile}`);
