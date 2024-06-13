@@ -20,9 +20,9 @@ repo-cat [options]
 
 ### Options
 
-- `--ignore-files <files...>`: Comma-separated list of files to ignore.
-- `--ignore-folders <folders...>`: Comma-separated list of folders to ignore.
-- `--ignore-exts <extensions...>`: Comma-separated list of file extensions to ignore (without the dot).
+- `--ignore-files <files...>`: Space-separated list of files to ignore.
+- `--ignore-folders <folders...>`: Space-separated list of folders to ignore.
+- `--ignore-exts <extensions...>`: Space-separated list of file extensions to ignore (without the dot).
 - `-o, --output <file>`: Output file name (default: `repo-contents.txt`).
 
 ### Example
@@ -30,7 +30,7 @@ repo-cat [options]
 To create a file named `project-snapshot.txt` containing the contents of the current repository, excluding the `node_modules` folder, `.env` files, and `.png` and `.jpg` image files, run:
 
 ```
-repo-cat --ignore-folders node_modules --ignore-files .env --ignore-exts png,jpg -o project-snapshot.txt
+repo-cat --ignore-folders node_modules --ignore-files .env --ignore-exts png jpg -o project-snapshot.txt
 ```
 
 ## Default Ignored Patterns
